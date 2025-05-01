@@ -1,0 +1,194 @@
+//Data Storage of Students, Teachers and Staff 
+#include<stdio.h>
+#include<string.h>
+
+//student info.
+typedef struct studentInformation{
+    char name[50];
+    char email[100];
+    float cgpa;
+    int semester;
+    char dept[30];
+    char section;
+}studentInfo;
+
+//teacher's info
+typedef struct teacherInformation{
+    char name[50];
+    char email[100];
+    char dept[30];
+    int teachingYear;
+}teacherInfo;
+
+//staff info
+typedef struct staffInformation{
+    char name[50];
+    char desig[50];
+    int workYear;
+}staffInfo;
+
+//Student Marks
+// typedef
+
+void accessStudentInformation(studentInfo student[], int studentNo);
+void accessTeacherInformation(teacherInfo teacher[]);
+void accessStaffInformation(staffInfo staff[]);
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+//Main Function
+int main(){
+
+    studentInfo student[5]; //no. of students: 5
+    teacherInfo teacher[4]; //no. of teachers: 4
+    staffInfo staff[3]; //no. of staff: 3
+
+    int studentNo, teacherNo, staffNo;
+    char loopCondition;
+
+    printf("\n\nAccess Info? (y/n) : ");
+    scanf("%c ", &loopCondition); 
+
+    while(loopCondition == 'y' || loopCondition == 'Y'){  //carry loop
+
+        char choice;
+        printf("\n\nWhat would you like to access?\n");
+        printf("Press: (s) for Student's Info. | (t) for Teacher's Info. | (S) for Staff Info.\n\n");
+        scanf("%c", &choice);
+
+        //Choice = (s) : Student
+        if(choice == 's'){
+            printf("Enter student number (1-5):");
+            scanf("%d", &studentNo);
+
+            accessStudentInformation(student, studentNo);
+        
+         }
+    }
+    
+    // accessTeacherInformation(teacher);
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+
+//Student Info
+void accessStudentInformation(studentInfo student[], int studentNo){
+
+//student: 1
+strcpy(student[0].name, "Raghav Sharma");
+strcpy(student[0].email, "RS123@gmail.com");
+student[0].semester = 1;
+strcpy(student[0].dept, "CSE");
+student[0].section = 'A';
+
+//student: 2
+strcpy(student[1].name, "Rajat Singh");
+strcpy(student[1].email, "rajatsingh@gmail.com");
+student[1].semester = 1;
+strcpy(student[1].dept, "CSE");
+student[1].section = 'A';
+
+//student: 3
+strcpy(student[2].name, "Anshi Singh");
+strcpy(student[2].email, "anshiKh@gmail.com");
+student[2].semester = 1;
+strcpy(student[2].dept, "CSE");
+student[2].section = 'B';
+
+//student: 4
+strcpy(student[3].name, "Arundhati Roy");
+strcpy(student[3].email, "arundhati@gmail.com");
+student[3].semester = 1;
+strcpy(student[3].dept, "ECE");
+student[3].section = 'C';
+
+//student: 5
+strcpy(student[4].name, "Dhruv Sharma");
+strcpy(student[4].email, "dhruvsharma123@gmail.com");
+student[4].semester = 1;
+strcpy(student[4].dept, "ECE");
+student[4].section = 'C';
+
+//Choose Info
+for(int i=0; i<5; i++){
+    if((i + 1) == studentNo){
+        printf("Name: %s | Email: %s | Semester: %d | Department: %s | Section: %c\n", student[i].name, student[i].email, student[i].semester, student[i].dept, student[i].section);
+
+        return;
+    }
+}
+   
+
+
+}
+
+//Teacher info
+void accessTeacherInformation(teacherInfo teacher[]){
+
+    //Teacher: 1
+    strcpy(teacher[0].name, "Abhinav Chatterji");
+    strcpy(teacher[0].email, "AC123@gmail.com");
+    strcpy(teacher[0].dept, "Physics");
+    teacher[0].teachingYear = 5;
+
+    //Teacher: 2
+    strcpy(teacher[1].name, "Utpal Roy");
+    strcpy(teacher[1].email, "UtpalRoy34@gmail.com");
+    strcpy(teacher[1].dept, "Maths");
+    teacher[1].teachingYear = 7;
+    
+    //Teacher: 3
+    strcpy(teacher[2].name, "Meenakshi Paul");
+    strcpy(teacher[2].email, "Paul77@gmail.com");
+    strcpy(teacher[2].dept, "Computer Science");
+    teacher[2].teachingYear = 4;
+
+    //Teacher: 4
+    strcpy(teacher[3].name, "Sheena Sharma");
+    strcpy(teacher[3].email, "SheenaSh@gmail.com");
+    strcpy(teacher[3].dept, "Chemistry");
+    teacher[3].teachingYear = 5;
+
+    printf("%s\n", teacher[2].dept);
+}
+
+//Staff Info
+void accessStaffInformation(staffInfo staff[]){
+
+    //Staff: 1
+    strcpy(staff[0].name, "Ramesh Singh");
+    strcpy(staff[0].desig, "IT Dept");
+    staff[0].workYear = 5;
+
+    //Staff: 2
+    strcpy(staff[1].name, "Mrinalini Choudhury");
+    strcpy(staff[1].desig, "Student Counsellor");
+    staff[1].workYear = 4;
+
+    //Staff: 3
+    strcpy(staff[2].name, "Suresh Sherekhar");
+    strcpy(staff[2].desig, "Finance");
+    staff[2].workYear = 3;
+
+}
+
+
+
+
+
+
+
+    // // email: %s, no: %d, sem: %d, dept: %s, sec: %c
