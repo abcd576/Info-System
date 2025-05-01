@@ -28,13 +28,19 @@ typedef struct staffInformation{
 }staffInfo;
 
 //Student Marks
-// typedef
+typedef struct studentMarks{
+    float phy;
+    float chem;
+    float math;
+    float eng;
+    float comp;
+} marks;
 
-void accessStudentInformation(studentInfo student[], int studentNo);
-void accessTeacherInformation(teacherInfo teacher[]);
-void accessStaffInformation(staffInfo staff[]);
-
-
+void accessStudentInformation(studentInfo student[], marks S1[], int studentNo);
+void accessTeacherInformation(teacherInfo teacher[], int teacherNo);
+void accessStaffInformation(staffInfo staff[], int staffNo);
+void calcCGPA(marks S1[], studentInfo student[], int i);
+float calculateGradePoint(float score);
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -42,34 +48,90 @@ void accessStaffInformation(staffInfo staff[]);
 //Main Function
 int main(){
 
+    //Structure array 
     studentInfo student[5]; //no. of students: 5
     teacherInfo teacher[4]; //no. of teachers: 4
     staffInfo staff[3]; //no. of staff: 3
 
+    //marks
+    marks S1[5];
+
+    //ID Numbers
     int studentNo, teacherNo, staffNo;
-    char loopCondition;
+    char loopCondition = 'y';
 
-    printf("\n\nAccess Info? (y/n) : ");
-    scanf("%c ", &loopCondition); 
-
+    //Start
+    
     while(loopCondition == 'y' || loopCondition == 'Y'){  //carry loop
 
         char choice;
-        printf("\n\nWhat would you like to access?\n");
-        printf("Press: (s) for Student's Info. | (t) for Teacher's Info. | (S) for Staff Info.\n\n");
-        scanf("%c", &choice);
+        printf("\nWhat would you like to access?\n\n");
+        printf("Press: (s) for Student's Info. | (t) for Teacher's Info. | (S) for Staff Info. -  ");
+        scanf(" %c", &choice);
 
         //Choice = (s) : Student
         if(choice == 's'){
-            printf("Enter student number (1-5):");
+            printf("\nEnter student ID number (1-5): ");
             scanf("%d", &studentNo);
 
-            accessStudentInformation(student, studentNo);
+            while(studentNo < 1 || studentNo > 5){
+                printf("Invalid Entry! Enter again\n");
+                printf("\nEnter student ID number (1-5): ");
+                scanf("%d", &studentNo);
+            }
+            accessStudentInformation(student, S1, studentNo);
+            
+
         
          }
-    }
+
+        //Choice = (t) : Teacher
+        else if(choice == 't'){
+            printf("\nEnter teacher ID number (1-4): ");
+            scanf("%d", &teacherNo);
+            // if(teacherNo >= 1 && teacherNo <= 4){
+            // } else {
+            //     printf("Invalid Entry!\n");
+            // }
+            while(teacherNo < 1 || teacherNo > 4){
+                printf("Invalid Entry! Enter again\n");
+                printf("\nEnter teacher ID number (1-4): ");
+                scanf("%d", &teacherNo);
+            }
+            accessTeacherInformation(teacher, teacherNo);
+
+            
+        
+         }
     
-    // accessTeacherInformation(teacher);
+         //Choice = (S) : Staff
+        else if(choice == 'S'){
+            printf("\nEnter staff ID number (1-3): ");
+            scanf("%d", &staffNo);
+            // if(staffNo >= 1 && staffNo <= 3){
+            // } else {
+            //     printf("Invalid Entry!\n");
+            // }
+            while(staffNo < 1 || staffNo > 3){
+                printf("Invalid Entry! Enter again\n");
+                printf("\nEnter staff ID number (1-3): ");
+                scanf("%d", &staffNo);
+            }
+            accessStaffInformation(staff, staffNo);
+
+        
+         }
+
+         else{
+            printf("\nInvalid Entry!\n");
+         }
+
+         printf("\nAccess more info? (y/n) : ");
+         scanf(" %c", &loopCondition); 
+}
+    
+    printf("\nThank You!\n\n");
+
 
     return 0;
 }
@@ -85,7 +147,7 @@ int main(){
 
 
 //Student Info
-void accessStudentInformation(studentInfo student[], int studentNo){
+void accessStudentInformation(studentInfo student[], marks S1[], int studentNo){
 
 //student: 1
 strcpy(student[0].name, "Raghav Sharma");
@@ -123,20 +185,105 @@ strcpy(student[4].dept, "ECE");
 student[4].section = 'C';
 
 //Choose Info
-for(int i=0; i<5; i++){
+int i; char choice;
+for(i=0; i<5; i++){
     if((i + 1) == studentNo){
-        printf("Name: %s | Email: %s | Semester: %d | Department: %s | Section: %c\n", student[i].name, student[i].email, student[i].semester, student[i].dept, student[i].section);
+        printf("\nName: %s | Email: %s | Semester: %d | Department: %s | Section: %c\n", student[i].name, student[i].email, student[i].semester, student[i].dept, student[i].section);
 
+    printf("\nCalculate CGPA? (y/n) ");
+    scanf(" %c", &choice);
+
+    if(choice == 'y'){
+        calcCGPA(S1, student, i);
+    }
+    else{
         return;
     }
+
+    }
+ 
 }
+
    
 
+}
+
+
+//Calculate CGPA
+void calcCGPA(marks S1[], studentInfo student[], int i){
+    // char choice; 
+    // printf("Calculate CGPA? (y/n) ");
+    // scanf(" %c", &choice);
+
+    // if(choice == 'y'){
+        printf("\nScore Range : (0-100)\n\n");
+        printf("Enter Physics score: ");
+        scanf("%f", &S1[i].phy);
+        while(S1[i].phy > 100 || S1[i].phy < 0){
+            printf("Invalid marks! Enter again (0-100): ");
+            scanf("%f", &S1[i].phy);
+        }
+
+        printf("Enter Chemistry score: ");
+        scanf("%f", &S1[i].chem);
+        while(S1[i].chem > 100 || S1[i].chem < 0){
+            printf("Invalid marks! Enter again (0-100): ");
+            scanf("%f", &S1[i].chem);
+        }
+
+        printf("Enter Math score: ");
+        scanf("%f", &S1[i].math);
+        while(S1[i].math > 100 || S1[i].math < 0){
+            printf("Invalid marks! Enter again (0-100): ");
+            scanf("%f", &S1[i].math);
+        }
+
+        printf("Enter English score: ");
+        scanf("%f", &S1[i].eng);
+        while(S1[i].eng > 100 || S1[i].eng < 0){
+            printf("Invalid marks! Enter again (0-100): ");
+            scanf("%f", &S1[i].eng);
+        }
+
+        printf("Enter Computer score: ");
+        scanf("%f", &S1[i].comp);
+        while(S1[i].comp > 100 || S1[i].comp < 0){
+            printf("Invalid marks! Enter again (0-100): ");
+            scanf("%f", &S1[i].comp);
+        }
+
+// Grade Points 
+float score, gpPhy, gpChem, gpMath, gpEng, gpComp;
+
+gpPhy = calculateGradePoint(S1[i].phy);
+gpChem = calculateGradePoint(S1[i].chem);
+gpMath = calculateGradePoint(S1[i].math);
+gpEng = calculateGradePoint(S1[i].eng);
+gpComp = calculateGradePoint(S1[i].comp);
+
+float cgpa = (gpPhy + gpChem + gpMath + gpEng + gpComp)/5;
+student[i].cgpa = cgpa;
+printf("\nCGPA : %.2f\n", cgpa);
+    
 
 }
 
+float calculateGradePoint(float score) {
+        if(score >= 91) return 10;
+        else if(score >= 81) return 9;
+        else if(score >= 71) return 8;
+        else if(score >= 61) return 7;
+        else if(score >= 51) return 6;
+        else if(score >= 41) return 5;
+        else if(score >= 33) return 4;
+        else return 0;
+}
+    
+
+
+
 //Teacher info
-void accessTeacherInformation(teacherInfo teacher[]){
+void accessTeacherInformation(teacherInfo teacher[], int teacherNo){
 
     //Teacher: 1
     strcpy(teacher[0].name, "Abhinav Chatterji");
@@ -162,11 +309,19 @@ void accessTeacherInformation(teacherInfo teacher[]){
     strcpy(teacher[3].dept, "Chemistry");
     teacher[3].teachingYear = 5;
 
-    printf("%s\n", teacher[2].dept);
+//Choose Info
+for(int i=0; i<4; i++){
+    if((i + 1) == teacherNo){
+        printf("\nName: %s | Email: %s | Department: %s | Teaching Period: %d Years\n", teacher[i].name, teacher[i].email, teacher[i].dept, teacher[i].teachingYear);
+
+        return;
+    }
+
+}
 }
 
 //Staff Info
-void accessStaffInformation(staffInfo staff[]){
+void accessStaffInformation(staffInfo staff[], int staffNo){
 
     //Staff: 1
     strcpy(staff[0].name, "Ramesh Singh");
@@ -183,9 +338,19 @@ void accessStaffInformation(staffInfo staff[]){
     strcpy(staff[2].desig, "Finance");
     staff[2].workYear = 3;
 
+    //Choose Info
+    for(int i=0; i<3; i++){
+        if((i + 1) == staffNo){
+        printf("\nName: %s | Designation: %s | Working Period: %d Years\n", staff[i].name, staff[i].desig, staff[i].workYear);
+
+        return;
+    }
+  
+    }
 }
 
 
+//////////////////////////////////////////////////////////////////
 
 
 
